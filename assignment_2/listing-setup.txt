@@ -1,0 +1,119 @@
+// To install QEMU on Ubuntu
+~$ sudo apt-get install qemu
+
+// To install kvm on Ubuntu host 
+~$ sudo apt-get install qemu-kvm libvirt-bin virtinst bridge-utils cpu-checker
+
+After this you can use "kvm-ok" to check if everything is fine. It should give an output like this 
+$ kvm-ok
+INFO: /dev/kvm exists
+KVM acceleration can be used
+
+NOTE- In some cases you might not get the above mentioned output if the virtualization is disabled then you have to enable it in BIOS and then it should work.
+--------------------------------------------------------------------------------
+
+
+// To install Docker CE on ubuntu host
+--First uninstall older Docker versions if any
+~$ sudo apt-get remove docker docker-engine docker.io
+
+-- Update the apt package
+~$ sudo apt-get update
+
+-- To install packages which allow apt to use a repository over HTTPS
+~$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+-- To add Docker's official GPG key
+~$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+-- To verify we have the key with fingerprint "9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88"
+~$ sudo apt-key fingerprint 0EBFCD88
+
+-- To setup the stable repository
+~$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+-- To update the apt package again
+~$ sudo apt-get update
+
+-- To install the latest version of Docker CE
+~$ sudo apt-get install docker-ce
+
+-- To verify Docker CE is installed correctly
+~$ sudo docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+d1725b59e92d: Pull complete 
+Digest: sha256:0add3ace90ecb4adbf7777e9aacf18357296e799f81cabc9fde470971e499788
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+// To install Docker machine on Ubuntu
+$ base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+
+
+SOME KEY COMMANDS (DOCKER)
+// To list the docker machines
+~$ docker-machine ls
+
+// To start the docker machines
+~$ docker-machine start [machine name]
+
+// To stop the docker machine
+~$ docker-machine stop [machine name]
+
+// To setup environment to link a terminal window into a machine
+~$ docker-machine env [machine name]
+
+// To check the IP 
+~$ docker-machine ip [machine name]
+
+// To check the status
+~$ docker-machine status [machine name]
+
+// To pull the docker image
+~$ docker pull [image name]
+
+// To list all the images we have
+~$ docker images
+
+// To remove the image
+~$ docker rmi [image ID]
+
+// To run docker container
+~$ docker run [image name]
+
+// To list all the containers
+~$ docker ps -a
+
+// To list the running containers
+~$ docker ps
+
+// To remove the container
+~$ docker rm [container ID]
+---------------------------------------
+
+
+// To create a disk image
+~$ qemu-img create -f raw ccgroup-19.img 15G
+Formatting 'ccgroup-19.img', fmt=raw size=16106127360
+
+// To install x86_64 GNU/Linux distribution(Ubuntu 16.04.5 LTS (Xenial Xerus)) on it
+~$ sudo qemu-system-x86_64 --enable-kvm -m 2048 -machine smm=off -cdrom /home/nikhil/Downloads/ubuntu-16.04.5-desktop-amd64.iso -hda ccgroup-19.img -boot d
+
+// To run it after successfull installation with KVM. Here "ccgroup-19.img" has ubuntu installed now. 
+~$ sudo qemu-system-x86_64 --enable-kvm -m 3072 -hda ccgroup-19.img
+
+// To run QEMU only without kvm.
+~$ sudo qemu-system-x86_64 -m 3072 -hda ccgroup-19.img
+

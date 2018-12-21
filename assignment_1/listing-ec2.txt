@@ -1,0 +1,61 @@
+# aws cli installation
+pip install awscli
+
+# To configure aws cli credentials
+aws configure
+AWS Access Key ID [None]: random-strings
+AWS Secret Access Key [None]: random-strings
+Default region name [None]: us-east-2
+Default output format [None]: json
+
+# To verify login credentials
+aws ec2 describe-instances
+or
+aws ec2 describe-regions --output table
+
+# To create vpc (Optional) 
+aws ec2 create-vpc --cidr-block 10.0.0.0/16
+
+# To create a security group
+aws ec2 create-security-group --group-name cc-group19-sg --vpc-id vpc-eb888f83 \
+--description "Security group for cc group 19"
+
+# To create keypair to connect to instance
+aws ec2 create-key-pair --key-name cc-group19-key
+
+# To configure security groups for ingress ssh traffic
+aws ec2 authorize-security-group-ingress --group-name cc-group19-sg --protocol tcp \
+--port 22 --cidr 0.0.0.0/0
+
+# To create a subnet
+aws ec2 create-subnet --vpc-id vpc-059d4d64acd2298ca --cidr-block 10.0.0.0/24
+
+# To launch an instance
+aws ec2 run-instances --image-id ami-02e680c4540db351e --count 1 --instance-type t2.micro \
+--key-name cc-group19-key --security-group-ids sg-0f425b4ee5023bd1d
+ 
+# To ssh into instance
+ssh -i ~/Downloads/cc-group19-key.pem ec2-user@3.16.149.181
+The authenticity of host '3.16.149.181 (3.16.149.181)' can't be established.
+ECDSA key fingerprint is SHA256:YYpZPId3CaAR9Y9VEe/IMbMh8WIV48fZGiVRxH+G/70.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '3.16.149.181' (ECDSA) to the list of known hosts.
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-172-31-47-74 ~]$
+
+
+# To configure security group for ICMP to ping the instance
+aws ec2 authorize-security-group-ingress --group-name cc-group19-sg --protocol icmp \
+--port -1 --cidr 0.0.0.0/0
+
+# Ping response
+d071242@C02T427GHF1R ~> ping 3.16.149.181
+PING 3.16.149.181 (3.16.149.181): 56 data bytes
+64 bytes from 3.16.149.181: icmp_seq=0 ttl=230 time=118.442 ms
+64 bytes from 3.16.149.181: icmp_seq=1 ttl=230 time=117.935 ms
+64 bytes from 3.16.149.181: icmp_seq=2 ttl=230 time=117.601 ms

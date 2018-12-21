@@ -1,0 +1,96 @@
+CPU Benchmark
+
+<<<<<<< HEAD
+1. Look at linpack.sh and linpack.c and shortly describe how the benchmark works.
+
+Linpack Benchmark is a measure of a computer's floating-point rate of execution which 
+is using two routines to calculate number of floating point operations per second. 
+DGEFA will perform the LU decomposition with partial pivoting to decompose the matrix 
+and after the matrix decomposition, DGESL will use it to solve the give system of linear equations. 
+
+
+2. Find out what the LINPACK benchmark measures (try Google). Would you expect paravirtualization to affect the LINPACK benchmark? Why?
+
+Linpack benchmark measure the computational power, in other words, it measures how 
+fast can a machine solve the linear algebra calculations I,e how many floating point 
+operations can be performed in a second. The results are expressed as floating point 
+operation per second (FLOPs) . Only unpivilaged instructions can be involed as a task 
+and they are basically executed on the CPU, therefore we expect that paravirtualization 
+will not affect  the benchmark results with the assumption that the virtualized machine 
+has dedicated access to the host's resources.
+
+
+3. Look at your LINPACK measurements. Are they consistent with your expectations? If not, what could be the reason?
+
+Yes they are consistent with our expectations. We expected Google cloud platform with 
+higher value because it offers higher computing power. It also has 3.75GB RAM with 1 vCPU 
+as compared to AWS with 1GB RAM with 1 vCPU.
+
+Memory Benchmark
+
+1. Find out how the memsweep benchmark works by looking at the shell script and the C code. Would you expect virtualization to affect the memsweep benchmark? Why?
+
+Memsweep benchmark measures the performance of the swap subsystem. 
+It uses cache miss technique so that data has to be really loaded from the memory. 
+We are expecting that the virtualization to be affected as long as the 
+hypervisor needs to validate the write requests. It will consumed more time 
+compared to non-virtualized environment. 
+
+
+2. Look at your memsweep measurements. Are they consistent with your expectations. If not, what could be the reason?
+
+The memsweep time of AWS is better than GCP. We expected GCP to be better 
+because of higher RAM. However, it could be because of different hardware configurations.
+=======
+1.	Look at linpack.sh and linpack.c and shortly describe how the benchmark works.
+
+Linpack Benchmark is a measure of a computer’s floating-point rate of execution which is using two routines to calculate number of floating point operations per second. DGEFA will perform the LU decomposition with partial pivoting to decompose the matrix and after the matrix decomposition, DGESL will use it to solve the give system of linear equations. 
+
+
+2.	Find out what the LINPACK benchmark measures (try Google). Would you expect paravirtualization to affect the LINPACK benchmark? Why?
+
+Linpack benchmark measure the computational power, in other words, it measures how fast can a machine solve the linear algebra calculations I,e how many floating point operations can be performed in a second. The results are expressed as floating point operation per second (FLOPs) . Only unpivilaged instructions can be involed as a task and they are basically executed on the CPU, therefore we expect that paravirtualization will not affect  the benchmark results with the assumption that the virtualized machine has dedicated access to the host’s resources.
+
+
+3.	Look at your LINPACK measurements. Are they consistent with your expectations? If not, what could be the reason?
+----------------------------
+
+Memory Benchmark
+
+1.	Find out how the memsweep benchmark works by looking at the shell script and the C code. Would you expect virtualization to affect the memsweep benchmark? Why?
+
+Memsweep benchmark measures the performance of the swap subsystem. It uses cache miss technique so that data has to be really loaded from the memory. 
+We are expecting that the virtualization to be affected as long as the hypervisour needs to validate the write requests. It will consumed more time compared to non-virtualized environment. 
+
+
+2.	Look at your memsweep measurements. Are they consistent with your expectations. If not, what could be the reason?
+
+---- 
+>>>>>>> d1b7bb7fba048d747582fd4c8304a03f192df758
+
+
+Disk Benchmark
+
+<<<<<<< HEAD
+1. Look at the disk measurements. Are they consistent with your expectations. If not, what could be the reason?
+
+My assumption would be that the day and night result ,SSD HDD result should be different. 
+Although I guess AWS and GCP both are offering SSD 
+
+
+2. Compare the restults for the two operations (sequential, random). What are reasons for difference? 
+
+It has been always true that the sequantial data access is much more faster that 
+random due to way in which the disk works. The seek operation needs more time compared 
+to other part of I/O process. Random reading involves a higher number of seek operations, 
+therefore we will have a lower rate of throughput which is also the same for random writing.
+=======
+1.	Look at the disk measurements. Are they consistent with your expectations. If not, what could be the reason?
+My assumption would be that the day and night result , SSD HDD result should be different. Although I guess AWS and GCP both are offering SSD 
+
+
+2.	Compare the restults for the two operations (sequential, random). What are reasons for difference? 
+
+It has been always true that the sequantial data access is much more faster that random due to way in which the disk works. The seek operation needs more time compared to other part of I/O process. Random reading involves a higher number of seek operations, therefore we will have a lower rate of throughput which is also the same for random writing. 
+
+>>>>>>> d1b7bb7fba048d747582fd4c8304a03f192df758

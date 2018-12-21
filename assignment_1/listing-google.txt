@@ -1,0 +1,68 @@
+# To test after setting initial configuration if we are authenticated
+gcloud auth list
+
+# To create an instance
+gcloud beta compute --project=cloud-computing-222418 instances create cc-group19-vm \
+--zone=europe-north1-a --machine-type=n1-standard-1 --subnet=default \
+--network-tier=PREMIUM --maintenance-policy=MIGRATE \
+--service-account=1026174014289-compute@developer.gserviceaccount.com \
+--scopes=https://www.googleapis.com/auth/cloud-platform --tags=http-server,https-server \
+--image=debian-9-stretch-v20181113 --image-project=debian-cloud --boot-disk-size=10GB \
+--boot-disk-type=pd-standard --boot-disk-device-name=cc-group19-vm
+
+# To create preemptible instance
+gcloud beta compute --project=cloud-computing-222418 instances create cc-group19-preemptible-vm \
+--zone=europe-west3-a --machine-type=n1-standard-1 --subnet=default --network-tier=PREMIUM \
+--no-restart-on-failure --maintenance-policy=TERMINATE --preemptible \
+--service-account=1026174014289-compute@developer.gserviceaccount.com \
+--scopes=https://www.googleapis.com/auth/cloud-platform --image=debian-9-stretch-v20181113 \
+--image-project=debian-cloud --boot-disk-size=10GB --boot-disk-type=pd-standard \
+--boot-disk-device-name=cc-group19-preemptible-vm
+
+# To list the instances with current status 
+gcloud beta compute instances list
+
+# To get more details about the specific instance
+gcloud compute instances describe cc-group19-vm
+
+# To configure firewall rules for http traffic
+gcloud compute --project=cloud-computing-222418 firewall-rules create default-allow-http \
+--direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:80 \
+--source-ranges=0.0.0.0/0 --target-tags=http-server
+
+# To configure firewall rules for https traffic
+gcloud compute --project=cloud-computing-222418 firewall-rules create default-allow-https \
+--direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:443 \
+--source-ranges=0.0.0.0/0 --target-tags=https-server
+
+# To configure firewall rules for ICMP traffic
+gcloud compute firewall-rules create allow-icmp --allow icmp
+
+# To configure firewall rules for ssh traffic
+gcloud compute firewall-rules create allow-ssh --allow tcp:22
+
+# To generate local SSH key pair
+ssh-keygen -t rsa -C "nikkytub@gmail.com"
+
+# To upload the public key to gcloud go to Compute Engine Metadata and click on add metadata then enter the details and save.
+
+# To SSH into an instance
+gcloud compute --project "cloud-computing-222418" ssh --zone "europe-north1-a" "cc-group19-vm"
+Warning: Permanently added 'compute.9014647258550448615' (ECDSA) to the list of known hosts.
+Linux cc-group19-vm 4.9.0-8-amd64 #1 SMP Debian 4.9.130-2 (2018-10-27) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+nikky@cc-group19-vm:~$
+
+
+# To ping the vm
+ping 35.228.92.40
+PING 35.228.92.40 (35.228.92.40): 56 data bytes
+64 bytes from 35.228.92.40: icmp_seq=0 ttl=58 time=47.213 ms
+64 bytes from 35.228.92.40: icmp_seq=1 ttl=58 time=47.315 ms
+64 bytes from 35.228.92.40: icmp_seq=2 ttl=58 time=46.370 ms
