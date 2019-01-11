@@ -1,0 +1,52 @@
+// To SSH into the vm
+gcloud compute --project "cc-group-19" ssh --zone "europe-north1-a" "vm-1"
+
+NOTE- In order to use ansible please make sure that python-2 is installed. On Linux 18.04 in GCP python-3 is installed by default and we have to use python-2 to use ansible. 
+// To install pip (python-pip is in the universe repositories so we used the steps mentioned below)
+sudo apt-get install software-properties-common
+sudo apt-add-repository universe
+sudo apt-get update
+sudo apt-get install python-pip
+
+// To install virtualenv
+sudo apt install virtualenv
+
+// To activate virtualenv
+virtualenv venv
+source venv/bin/activate
+
+// To install ansible version 2.6 inside virtualenv
+pip install ansible==2.6
+
+// To clone the kubespray repository
+git clone https://github.com/kubernetes-sigs/kubespray.git
+
+// To install all the requirements
+pip install -r requirements.txt
+
+// To checkout to commit tagged as v2.8.1 
+git checkout 2ac1c7562f46bba6be210f5aaa80f8510ffd850c 
+
+// To generate ansible inventory using example inventory generator
+cp -r inventory/sample inventory/mycluster
+declare -a IPS=(10.166.0.5 10.166.0.6 10.166.0.7)
+CONFIG_FILE=inventory/mycluster/hosts.ini python3 contrib/inventory_builder/inventory.py ${IPS[@]}
+
+NOTE- We added node3 under [kube-master] in ansible inventory which wasn't present by default.
+
+// To begin the deployment
+ansible-playbook -i inventory/mycluster/hosts.ini cluster.yml -b
+
+// To start using your cluster, we need to run (as a regular user):
+sudo cp /etc/kubernetes/admin.conf $HOME/
+sudo chown $(id -u):$(id -g) $HOME/admin.conf
+export KUBECONFIG=$HOME/admin.conf
+
+// To verify everything is installed correctly and working
+(venv) nikhilsingh_tub@vm-1:~/kubespray$ kubectl cluster-info
+Kubernetes master is running at https://10.166.0.5:6443
+coredns is running at https://10.166.0.5:6443/api/v1/namespaces/kube-system/services/coredns:dns/proxy
+kubernetes-dashboard is running at https://10.166.0.5:6443/api/v1/namespaces/kube-system/services/https:kubernetes-
+dashboard:/proxy
+
+
