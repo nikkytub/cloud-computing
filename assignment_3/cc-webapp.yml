@@ -30,6 +30,30 @@
       dest: /home/nikhilsingh_tub/service-back.yml
       mode: 0644
 
+  - name: Copy the liveness-back file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/liveness-back.yml
+      dest: /home/nikhilsingh_tub/liveness-back.yml
+      mode: 0644
+
+  - name: Copy the liveness-front file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/liveness-front.yml
+      dest: /home/nikhilsingh_tub/liveness-front.yml
+      mode: 0644
+
+  - name: Copy the readiness-back file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/readiness-back.yml
+      dest: /home/nikhilsingh_tub/readiness-back.yml
+      mode: 0644
+
+  - name: Copy the readiness-front file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/readiness-front.yml
+      dest: /home/nikhilsingh_tub/readiness-front.yml
+      mode: 0644
+
   - name: Create a k8s namespace
     k8s: name=nikhil api_version=v1 kind=Namespace state=present
 
@@ -52,3 +76,23 @@
     k8s:
       state: present
       src: /home/nikhilsingh_tub/deploy-front.yml
+
+  - name: Create a backend liveness pod by reading the definition from a local file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/liveness-back.yml
+
+  - name: Create a frontend liveness pod by reading the definition from a local file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/liveness-front.yml
+
+  - name: Create a backend readiness pod by reading the definition from a local file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/readiness-back.yml
+
+  - name: Create a frontend readiness pod by reading the definition from a local file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/readiness-front.yml

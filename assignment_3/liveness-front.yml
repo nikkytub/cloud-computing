@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: nginx-front
+    test: liveness
+  name: liveness-http-front
+  namespace: nikhil
+spec:
+  containers:
+  - name: liveness-front
+    image: cnych/liveness:latest
+    args:
+    - /server
+    livenessProbe:
+      httpGet:
+        path: /ready
+        port: 80
+        httpHeaders:
+        - name: CC-Ready
+          value: Frontend
+      initialDelaySeconds: 3
+      periodSeconds: 3
