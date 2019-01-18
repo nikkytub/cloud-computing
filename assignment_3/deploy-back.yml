@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-back
+  namespace: nikhil
+  labels:
+    app: nginx-back
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-back
+  template:
+    metadata:
+      labels:
+        app: nginx-back
+    spec:
+      containers:
+      - name: pod-nginx-back
+        image: nikkytub1/ngnxb:latest
+        ports:
+        - containerPort: 80

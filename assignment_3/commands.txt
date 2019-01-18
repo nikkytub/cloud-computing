@@ -57,3 +57,7 @@ docker build -t nikkytub1/ngnxb -f frontend.Dockerfile .
 docker push nikkytub1/ngnx
 docker push nikkytub1/ngnxb
 
+// Created a directory called nikhil in kubespray and put deploy-back.yml, deploy-front.yml, service-back.yml, service-front.yml in it. 
+
+// To run the playbook
+ansible-playbook -i inventory/mycluster/hosts.ini cc-webapp.yml -b

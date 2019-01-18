@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-front
+  namespace: nikhil
+  labels:
+    app: nginx-front
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-front
+  template:
+    metadata:
+      labels:
+        app: nginx-front
+    spec:
+      containers:
+      - name: pod-nginx-front
+        image: nikkytub1/ngnxf:latest
+        ports:
+        - containerPort: 80

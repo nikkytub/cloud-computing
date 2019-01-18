@@ -1,0 +1,54 @@
+---
+- hosts: kube-node
+  sudo: yes
+
+  tasks:
+  - name: Ensure Openshift is installed
+    pip: name=openshift state=present
+
+  - name: Copy the frontend-deployment file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/deploy-front.yml
+      dest: /home/nikhilsingh_tub/deploy-front.yml
+      mode: 0644
+
+  - name: Copy the backend-deployment file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/deploy-back.yml
+      dest: /home/nikhilsingh_tub/deploy-back.yml
+      mode: 0644
+
+  - name: Copy the frontend-service file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/service-front.yml
+      dest: /home/nikhilsingh_tub/service-front.yml
+      mode: 0644
+
+  - name: Copy the backend-service file
+    copy:
+      src: /home/nikhilsingh_tub/kubespray/nikhil/service-back.yml
+      dest: /home/nikhilsingh_tub/service-back.yml
+      mode: 0644
+
+  - name: Create a k8s namespace
+    k8s: name=nikhil api_version=v1 kind=Namespace state=present
+
+  - name: Create a frontend service object by reading the definition from a file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/service-front.yml
+
+  - name: Create a backend service object by reading the definition from a file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/service-back.yml
+
+  - name: Create a backend deployment by reading the definition from a local file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/deploy-back.yml
+
+  - name: Create a frontend deployment by reading the definition from a local file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/deploy-front.yml
