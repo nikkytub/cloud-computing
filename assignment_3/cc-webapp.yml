@@ -33,20 +33,20 @@
   - name: Create a k8s namespace
     k8s: name=nikhil api_version=v1 kind=Namespace state=present
 
-  - name: Create a frontend service object by reading the definition from a file
-    k8s:
-      state: present
-      src: /home/nikhilsingh_tub/service-front.yml
-
-  - name: Create a backend service object by reading the definition from a file
-    k8s:
-      state: present
-      src: /home/nikhilsingh_tub/service-back.yml
-
   - name: Create a backend deployment by reading the definition from a local file
     k8s:
       state: present
       src: /home/nikhilsingh_tub/deploy-back.yml
+
+  - name: Create a backend service object by reading the definition from a file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/service-back.yml  
+
+  - name: Create a frontend service object by reading the definition from a file
+    k8s:
+      state: present
+      src: /home/nikhilsingh_tub/service-front.yml
 
   - name: Create a frontend deployment by reading the definition from a local file
     k8s:
