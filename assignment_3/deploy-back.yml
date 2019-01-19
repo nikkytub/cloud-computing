@@ -20,3 +20,21 @@ spec:
         image: nikkytub1/ngnxb:latest
         ports:
         - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+            httpHeaders:
+            - name: CC-Ready
+              value: Backend
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+            httpHeaders:
+            - name: CC-Ready
+              value: Backend
+          initialDelaySeconds: 15
+          periodSeconds: 3
