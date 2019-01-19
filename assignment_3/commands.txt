@@ -50,11 +50,11 @@ kubernetes-dashboard is running at https://10.166.0.5:6443/api/v1/namespaces/kub
 dashboard:/proxy
 
 // To build a docker image from a docker file
-docker build -t nikkytub1/ngnx -f frontend.Dockerfile .
+docker build -t nikkytub1/ngnxf -f frontend.Dockerfile .
 docker build -t nikkytub1/ngnxb -f frontend.Dockerfile .
 
 // To push the images to Dockerhub 
-docker push nikkytub1/ngnx
+docker push nikkytub1/ngnxf
 docker push nikkytub1/ngnxb
 
 // Created a directory called nikhil in kubespray and put deploy-back.yml, deploy-front.yml, service-back.yml, service-front.yml in it. 
