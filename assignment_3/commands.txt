@@ -61,3 +61,14 @@ docker push nikkytub1/ngnxb
 
 // To run the playbook
 ansible-playbook -i inventory/mycluster/hosts.ini cc-webapp.yml -b
+
+// To get the details of the deployment
+kubectl describe deployment deploy-back --namespace nikhil
+kubectl describe deployment deploy-front --namespace nikhil
+
+// To check the status of the pods
+kubectl get pods --namespace nikhil
+
+// To find out node port chosen by Kubernetes to export our frontend services on the VMs
+kubectl describe services cc-frontend-service --namespace nikhil
+
