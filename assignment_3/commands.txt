@@ -72,3 +72,7 @@ kubectl get pods --namespace nikhil
 // To find out node port chosen by Kubernetes to export our frontend services on the VMs
 kubectl describe services cc-frontend-service --namespace nikhil
 
+// To scale up the deployment
+kubectl scale deployment deploy-front --replicas=9 --namespace nikhil
+kubectl scale deployment deploy-back --replicas=9 --namespace nikhil
+
