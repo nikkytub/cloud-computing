@@ -73,6 +73,6 @@ kubectl get pods --namespace nikhil
 kubectl describe services cc-frontend-service --namespace nikhil
 
 // To scale up the deployment
-kubectl scale deployment deploy-front --replicas=9 --namespace nikhil
-kubectl scale deployment deploy-back --replicas=9 --namespace nikhil
+kubectl scale deployment deploy-front --replicas=4 --namespace nikhil
+kubectl scale deployment deploy-back --replicas=6 --namespace nikhil
 
