@@ -83,3 +83,17 @@ kubectl describe services cc-frontend-service --namespace nikhil
 kubectl scale deployment deploy-front --replicas=4 --namespace nikhil
 kubectl scale deployment deploy-back --replicas=6 --namespace nikhil
 
+// To check the status after scaling up
+nikhilsingh_tub@node1:~/cloud-computing/assignment_3$ kubectl get pods --namespace nikhil
+NAME                            READY   STATUS    RESTARTS   AGE
+deploy-back-6f657d69fc-5vsbq    1/1     Running   0          26m
+deploy-back-6f657d69fc-gpxz4    1/1     Running   0          19s
+deploy-back-6f657d69fc-mlvrv    1/1     Running   0          57s
+deploy-back-6f657d69fc-rjxr6    1/1     Running   0          26m
+deploy-back-6f657d69fc-tr8hn    1/1     Running   0          26m
+deploy-back-6f657d69fc-v4vbb    1/1     Running   0          19s
+deploy-front-6974648d77-7pqsm   1/1     Running   0          26m
+deploy-front-6974648d77-d7skq   1/1     Running   0          93s
+deploy-front-6974648d77-jzgm7   1/1     Running   0          26m
+deploy-front-6974648d77-zx4tn   1/1     Running   0          26m
+
