@@ -67,7 +67,14 @@ kubectl describe deployment deploy-back --namespace nikhil
 kubectl describe deployment deploy-front --namespace nikhil
 
 // To check the status of the pods
-kubectl get pods --namespace nikhil
+nikhilsingh_tub@node1:~/cloud-computing/assignment_3$ kubectl get pods --namespace nikhil
+NAME                            READY   STATUS    RESTARTS   AGE
+deploy-back-6f657d69fc-5vsbq    1/1     Running   0          22m
+deploy-back-6f657d69fc-rjxr6    1/1     Running   0          22m
+deploy-back-6f657d69fc-tr8hn    1/1     Running   0          22m
+deploy-front-6974648d77-7pqsm   1/1     Running   0          22m
+deploy-front-6974648d77-jzgm7   1/1     Running   0          22m
+deploy-front-6974648d77-zx4tn   1/1     Running   0          22m
 
 // To find out node port chosen by Kubernetes to export our frontend services on the VMs
 kubectl describe services cc-frontend-service --namespace nikhil
