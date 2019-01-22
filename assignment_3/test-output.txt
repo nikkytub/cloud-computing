@@ -1,0 +1,31 @@
+python test-deployment.py 10.166.0.5:30001 10.166.0.6:30001 10.166.0.7:30001
+Sending 100 requests to 10.166.0.5:30001...
+Sending 100 requests to 10.166.0.6:30001...
+Sending 100 requests to 10.166.0.7:30001...
+
+Encountered 3 frontends:
+deploy-front-6974648d77-jzgm7
+deploy-front-6974648d77-zx4tn
+deploy-front-6974648d77-7pqsm
+
+Encountered 4 backends:
+deploy-back-6f657d69fc-p72t8
+deploy-back-6f657d69fc-5vsbq
+deploy-back-6f657d69fc-rjxr6
+deploy-back-6f657d69fc-h8jv4
+
+Encountered 12 reply texts:
+Hello! You are 10.233.71.28 and requested /etc/nginx/html/ from 10.233.75.25 (deploy-back-6f657d69fc-h8jv4)
+Hello! You are 10.233.102.180 and requested /etc/nginx/html/ from 10.233.75.25 (deploy-back-6f657d69fc-h8jv4)
+Hello! You are 10.233.102.180 and requested /etc/nginx/html/ from 10.233.102.176 (deploy-back-6f657d69fc-rjxr6)
+Hello! You are 10.233.71.28 and requested /etc/nginx/html/ from 10.233.102.178 (deploy-back-6f657d69fc-p72t8)
+Hello! You are 10.233.71.28 and requested /etc/nginx/html/ from 10.233.102.176 (deploy-back-6f657d69fc-rjxr6)
+Hello! You are 10.233.75.24 and requested /etc/nginx/html/ from 10.233.75.26 (deploy-back-6f657d69fc-5vsbq)
+Hello! You are 10.233.75.24 and requested /etc/nginx/html/ from 10.233.75.25 (deploy-back-6f657d69fc-h8jv4)
+Hello! You are 10.233.102.180 and requested /etc/nginx/html/ from 10.233.102.178 (deploy-back-6f657d69fc-p72t8)
+Hello! You are 10.233.102.180 and requested /etc/nginx/html/ from 10.233.75.26 (deploy-back-6f657d69fc-5vsbq)
+Hello! You are 10.233.75.24 and requested /etc/nginx/html/ from 10.233.102.178 (deploy-back-6f657d69fc-p72t8)
+Hello! You are 10.233.75.24 and requested /etc/nginx/html/ from 10.233.102.176 (deploy-back-6f657d69fc-rjxr6)
+Hello! You are 10.233.71.28 and requested /etc/nginx/html/ from 10.233.75.26 (deploy-back-6f657d69fc-5vsbq)
+
+All tests passed.
