@@ -1,0 +1,50 @@
+Methods of Cloud Computing - Assignment 4
+
+Group #: 4
+Group Members: 
+	Muhammad Nouman Shahzad
+	Susanne Rostmund
+	Nikhil Singh
+
+
+
+Word Count
+
+1. Which steps in your program require communication and synchronization
+   between your workers?
+
+   The groupBy stage, where input data words are grouped for similar words needs communication between all the worker nodes, in order to shuffle the data to the relevant nodes.
+
+
+2. What are bounding resources? Memory? CPU? Network? Disk?
+   
+   With larger input data, the same word count program will be bound by Network, due to the shuffle that needs to take place.
+
+   Furthermore, it can also be blocked by Memory, if the input data is magnitudes larger than the available total memory in the cluser
+
+
+
+K-Means Clustering
+
+1. Which steps in your program require communication and synchronization
+   between your workers?
+
+   The initial centroid calculation has a 'distinct' function call. This defintely needs to communicate with other worker nodes to dedup the input data.
+
+   While calculating the new centroids, a 'reduce' function call is made. This also needs communication accross worker nodes
+
+   Once the new centroids are calculated, they are broadcasted to all the worker nodes. This too needs synchronization between worker nodes.
+
+
+2. What are bounding resources? Memory? CPU? Network? Disk?
+   
+   In case 'k' is quite large, the program will be network bound, as these k centroids have to broadcasted at each iteration to all worker nodes.
+
+   Similar behaviour will be observed in case 'k' and 'iterations' both have large values
+
+   Higher values of 'k' and 'iteration' will also make the program CPU bound
+
+
+3. Could you improve partitioning of your data to yield better results?
+   
+   As cell-id is used as the starting centroids, a pre-sorted input data according to the cell-id in this case can help improve performance.

@@ -1,0 +1,52 @@
+
+## CREATE S3 BUCKET
+
+aws s3api create-bucket --bucket cc-assign4-ws1819 --region eu-west-1 --create-bucket-configuration LocationConstraint=eu-west-1
+
+
+
+## COPY RELEVANT ARTIFACTS TO S3
+
+aws s3 cp tolstoy-war-and-peace.txt s3://cc-assign4-ws1819/
+
+aws s3 cp berlin.csv s3://cc-assign4-ws1819/
+
+aws s3 cp germany.csv s3://cc-assign4-ws1819/
+
+aws s3 cp assignment-4.jar s3://cc-assign4-ws1819/
+
+
+
+## CREATE DEFAULT IAM ROLES FOR EMR CLUSTER
+
+aws emr create-default-roles
+
+
+
+## CREATE A NEW EMR CLUSTER WITH FLINK INSTALLED ON IT
+
+aws emr create-cluster --release-label emr-5.20.0 --instance-type m3.xlarge --instance-count 4 --no-auto-terminate --name flink-cluster --applications Name=Flink Name=Ganglia --use-default-roles --ec2-attributes KeyName=id_rsa
+
+
+
+## USING EMR STEP FUNCTION, SUBMIT THE JAR FILE TO RUN WORDCOUNT PROGRAM
+## REQUIRED ARGUMENTS FOR THE JAR ARE ALSO PASSED
+
+aws emr add-steps --cluster-id j-YJQEX19SI9Z2 --steps Name=WordCount,Args=--input,s3://cc-assign4-ws1819/tolstoy-war-and-peace.txt,--output,s3://cc-assign4-ws1819/wordcount-output/,Jar=s3://cc-assign4-ws1819/assignment-4-1.0-SNAPSHOT.jar,ActionOnFailure=CONTINUE,MainClass=cc.WordCount
+
+
+## USING EMR STEP FUNCTION, SUBMIT THE JAR FILE TO RUN K-MEANS PROGRAM FOR THE BERLIN DATASET
+
+aws emr add-steps --cluster-id j-YJQEX19SI9Z2 --steps Name=K-Means,Args=--input,s3://cc-assign4-ws1819/berlin.csv,--output,s3://cc-assign4-ws1819/kmeans-berlin-output/,--iterations,50,--k,500,Jar=s3://cc-assign4-ws1819/assignment-4-1.0-SNAPSHOT.jar,ActionOnFailure=CONTINUE,MainClass=cc.CellCluster
+
+
+
+## USING EMR STEP FUNCTION, SUBMIT THE JAR FILE TO RUN K-MEANS PROGRAM FOR THE GERMANY DATASET
+
+aws emr add-steps --cluster-id j-YJQEX19SI9Z2 --steps Name=K-Means,Args=--input,s3://cc-assign4-ws1819/germany.csv,--output,s3://cc-assign4-ws1819/kmeans-germany-output/,--iterations,500,--k,1000,Jar=s3://cc-assign4-ws1819/assignment-4-1.0-SNAPSHOT.jar,ActionOnFailure=CONTINUE,MainClass=cc.CellCluster
+
+
+
+## FINALLY TERMINATE THE EMR CLUSTER
+
+aws emr terminate-clusters --cluster-id j-YJQEX19SI9Z2
